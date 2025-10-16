@@ -15,9 +15,13 @@ const Profiles = () => {
   return (
     <View style={styles.container}>
       <View style={styles.profileHeader}>
-        <AvatarIcon style={styles.profileIcon}/>
+        <View style={styles.profileIcon}>
+           <AvatarIcon width={30} height={30}  color="#fff"/>
+        </View>
         <View style={styles.profileInfo}>
-          <CustomText style={styles.name}>Emma amoah yen</CustomText>
+          <CustomText style={styles.name}>Emmanuel Amoah-Abankwa</CustomText>
+          <CustomText style={styles.name}>(CEO)</CustomText>
+          <CustomText style={styles.name}>Yen Motion</CustomText>
           <CustomText style={styles.email}>vidaopoku2025@gmail.com</CustomText>
         </View>
       </View>
@@ -27,14 +31,14 @@ const Profiles = () => {
       </View>
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.viewButton}>
-            <ViewIcon style={styles.buttonIcon}/>
+            <ViewIcon width={18} height={18}/>
           <CustomText style={styles.viewButtonText}>View</CustomText>
         </TouchableOpacity>
         <TouchableOpacity style={styles.editButton}>
-          <LinkIcon style={styles.buttonIcon}/>
+          <LinkIcon width={18} height={18}/>
         </TouchableOpacity>
         <TouchableOpacity style={styles.deleteButton}>
-          <DeleteIcon style={styles.buttonIcon}/>
+          <DeleteIcon width={18} height={18} />
         </TouchableOpacity>
       </View>
     </View>
@@ -50,20 +54,23 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   profileHeader: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     marginBottom: 10,
   },
   profileIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+
+    padding: 25,
+    borderRadius: 50,
     backgroundColor: '#4a6ef5',
     tintColor: '#fff',
-    marginRight: 10,
+    marginBottom: 10,
   },
   profileInfo: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 3,
   },
   name: {
     fontSize: 16,
@@ -96,6 +103,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   viewButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 5,
+    alignItems: 'center',
     backgroundColor: '#4a6ef5',
     borderRadius: 8,
     paddingVertical: 8,
@@ -109,12 +120,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   editButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#666',
     borderRadius: 8,
     padding: 8,
     marginRight: 5,
   },
   deleteButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#e74c3c',
     borderRadius: 8,
     padding: 8,
