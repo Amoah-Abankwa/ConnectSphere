@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
-import { CustomText } from '@/app/components/ui/CustomText'
+import { CustomText } from '@/app/components/UI/CustomText'
 import Scan from './sections/Scan'
 import StartScanning from './sections/StartScanning'
 import UploadQR from './sections/UploadQR'
