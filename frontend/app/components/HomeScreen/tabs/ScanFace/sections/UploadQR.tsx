@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/ui/CustomText';
+import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/UI/CustomText';
 import UploadsIcon from '@/app/assets/icons/create/uploads.svg';
 
 const UploadQR = () => {
@@ -32,7 +32,7 @@ const UploadQR = () => {
       <View style={styles.uploadContainer}>
         
         <TouchableOpacity style={styles.uploadArea} onPress={handleUpload}>
-          <UploadsIcon style={styles.uploadIcon} />
+          <UploadsIcon width={50} height={50} />
           <CustomText style={styles.uploadText}>Click to upload face image</CustomText>
           <CustomText style={styles.formatText}>Supports JPG, PNG formats</CustomText>
         </TouchableOpacity>
