@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/ui/CustomText';
+import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/UI/CustomText';
 
 
 //ICONS
@@ -11,11 +11,11 @@ const StartScanning = () => {
   return (
     <View style={styles.container}>
       <View style={styles.previewContainer}>
-        <CameraIcon style={styles.previewIcon}/>
+        <CameraIcon width={50} height={50}/>
         <CustomText style={styles.previewText}>Camera preview will appear here</CustomText>
       </View>
       <TouchableOpacity style={styles.scanButton}>
-        <CameraIcon style={styles.startIcon}/>
+        <CameraIcon width={20} height={20}/>
         <CustomText style={styles.scanButtonText}>Start Scanning</CustomText>
       </TouchableOpacity>
     </View>
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f7fa',
     borderRadius: 8,
     justifyContent: 'center',
+    gap: 10,
     alignItems: 'center',
     marginBottom: 16,
   },
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 10,
     backgroundColor: '#5f42f1ff',
     borderRadius: 8,
     paddingVertical: 12,

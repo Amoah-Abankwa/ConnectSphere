@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
-import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/ui/CustomText';
+import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/UI/CustomText';
+import { useRouter } from 'expo-router';
 
 //ICONS
 import AvatarIcon from '@/app/assets/icons/create/avatar.svg';
@@ -12,6 +13,15 @@ import ViewIcon from '@/app/assets/icons/create/eye.svg';
 const Profiles = () => {
     const { width } = Dimensions.get('window');
   const scaleFactor = width / 375; // Normalize to a 375px base width (common iPhone design width)
+  const router = useRouter();
+
+
+  const handleViewProfile = () => {
+    router.push('/screens/ViewCard');
+  }
+
+
+
   return (
     <View style={styles.container}>
       <View style={styles.profileHeader}>
@@ -30,7 +40,7 @@ const Profiles = () => {
         <CustomText style={styles.status}>Active</CustomText>
       </View>
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.viewButton}>
+        <TouchableOpacity style={styles.viewButton} onPress={handleViewProfile}>
             <ViewIcon width={18} height={18}/>
           <CustomText style={styles.viewButtonText}>View</CustomText>
         </TouchableOpacity>

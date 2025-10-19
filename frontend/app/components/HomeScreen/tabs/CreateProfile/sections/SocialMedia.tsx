@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/ui/CustomText';
-import Dropdown from '@/app/components/shared/Dropdown';
-import Input from '@/app/components/Input';
+import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/UI/CustomText';
+import Dropdown from '@/app/components/Shared/Dropdown';
+import Input from '@/app/components/Shared/Input';
 
 const SocialMedia = () => {
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);

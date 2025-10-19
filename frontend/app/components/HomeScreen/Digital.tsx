@@ -6,7 +6,7 @@ const Digital: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <Digitals style={styles.icon} />
+        <Digitals width={50} height={50} style={styles.icon} />
 
       </View>
       <Text style={styles.title}>Digital Business Cards</Text>

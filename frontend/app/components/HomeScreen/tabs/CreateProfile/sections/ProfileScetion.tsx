@@ -4,7 +4,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import AvatarIcon from '../../../../../assets/icons/create/avatar.svg';
 import CameraIcon from '../../../../../assets/icons/create/camera.svg';
 import UploadIcon from '../../../../../assets/icons/create/upload.svg';
-import { CustomText } from '@/app/components/ui/CustomText';
+import { CustomText } from '@/app/components/UI/CustomText';
 
 const { width } = Dimensions.get('window');
 
@@ -62,14 +62,14 @@ const ProfileSection = () => {
   return (
     <View style={styles.container}>
       <CustomText style={styles.title}>Profile Photo</CustomText>
-      <AvatarIcon style={styles.avatar} />
+      <AvatarIcon height={50} width={50} />
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.photoButton} onPress={handleTakePhoto}>
-          <CameraIcon style={styles.icon} />
+          <CameraIcon height={15} width={15} />
           <CustomText style={styles.name}>Take Photo</CustomText>
         </TouchableOpacity>
         <TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>
-          <UploadIcon style={styles.icon} />
+          <UploadIcon height={15} width={15} />
           <CustomText style={styles.name}>Upload</CustomText>
         </TouchableOpacity>
       </View>
@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 20,
     backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
+    marginTop: 10,
+    borderRadius: 10,
   },
   avatar: {
     width: 50,
     height: 50,
-    padding: 40,
+    padding: 20,
     borderRadius: 60,
     backgroundColor: '#D1D5DB', // Placeholder background
   },
@@ -121,16 +121,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 5,
     borderRadius: 8,
     backgroundColor: '#1347e1',
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     minWidth: width * 0.35, // Responsive button width
   },
   uploadButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 5,
     borderRadius: 8,
     backgroundColor: '#2f2f30', // Fixed invalid hex color
     paddingVertical: 10,
