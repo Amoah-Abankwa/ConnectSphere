@@ -1,15 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '../ui/CustomText';
+import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '../UI/CustomText';
 import QRCodeSharingIcon from '../../assets/icons/General/qrcode.svg';
 
 
 const QRCodeSharing = () => {
   return (
     <View style={styles.container}>
-      <QRCodeSharingIcon style={styles.icon}/>
-      <CustomTextBold>QR Code Sharing</CustomTextBold>
-      <CustomText>Generate and share QR for instant contact sharing</CustomText>
+      <View style={styles.iconContainer}>
+        <QRCodeSharingIcon width={24} height={24} />
+      </View>
+      <CustomTextBold style={styles.contentTitle}>QR Code Sharing</CustomTextBold>
+      <CustomText style={styles.contentSubtitle}>Generate and share QR for instant contact sharing</CustomText>
     </View>
   )
 }
@@ -21,7 +23,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 20,
         paddingVertical: 10,
-        marginHorizontal: 20,
         marginBottom: 10,
         minHeight: 10,
         justifyContent: 'center',
@@ -36,5 +37,23 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       backgroundColor: '#fbd3d3ff',
       padding: 8
-    }
+    },
+    iconContainer: {
+    backgroundColor: '#b4d4f6ff', // Blue circle background
+    borderRadius: 25,
+    padding: 10,
+    marginBottom: 10,
+  },
+  contentTitle: {
+    marginBottom: 5,
+    fontSize: 18,
+    textAlign: 'center',
+    fontWeight: '600',
+    color: '#000',
+  },
+  contentSubtitle: {
+    textAlign: 'center',
+    fontSize: 14,
+    color: '#555',  
+  }
 })
