@@ -25,7 +25,7 @@ const DigiTabs = () => {
   };
 
   const handleMyProfile = () => {
-    router.push('/screens/SettingsScreen');
+    router.push('/screens/ViewCard');
   };
 
   return (

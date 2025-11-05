@@ -1,26 +1,56 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/UI/CustomText';
+import { View, TextInput, StyleSheet } from 'react-native';
+import { CustomText } from '../../../../../components/UI/CustomText';
+import { Profile } from '../../../../../types/profile';
 
-const BasicInformation = () => {
+interface BasicInformationProps {
+  profileData: Profile;
+  updateProfileData: (updates: Partial<Profile>) => void;
+}
+
+const BasicInformation: React.FC<BasicInformationProps> = ({ profileData, updateProfileData }) => {
   return (
     <View style={styles.container}>
       <CustomText style={styles.sectionTitle}>Basic Information</CustomText>
       <View style={styles.inputContainer}>
-        <CustomText style={styles.label}>First Name <CustomText style={styles.required}>*</CustomText></CustomText>
-        <TextInput style={styles.input} placeholder="Enter first name" />
+        <CustomText style={styles.label}>
+          First Name <CustomText style={styles.required}>*</CustomText>
+        </CustomText>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter first name"
+          value={profileData.firstName}
+          onChangeText={(text) => updateProfileData({ firstName: text })}
+        />
       </View>
       <View style={styles.inputContainer}>
-        <CustomText style={styles.label}>Last Name <Text style={styles.required}>*</Text></CustomText>
-        <TextInput style={styles.input} placeholder="Enter last name" />
+        <CustomText style={styles.label}>
+          Last Name <CustomText style={styles.required}>*</CustomText>
+        </CustomText>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter last name"
+          value={profileData.lastName}
+          onChangeText={(text) => updateProfileData({ lastName: text })}
+        />
       </View>
       <View style={styles.inputContainer}>
         <CustomText style={styles.label}>Middle Name</CustomText>
-        <TextInput style={styles.input} placeholder="Enter middle name" />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter middle name"
+          value={profileData.middleName}
+          onChangeText={(text) => updateProfileData({ middleName: text })}
+        />
       </View>
       <View style={styles.inputContainer}>
         <CustomText style={styles.label}>Other Name</CustomText>
-        <TextInput style={styles.input} placeholder="Enter other name" />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter other name"
+          value={profileData.otherName}
+          onChangeText={(text) => updateProfileData({ otherName: text })}
+        />
       </View>
     </View>
   );

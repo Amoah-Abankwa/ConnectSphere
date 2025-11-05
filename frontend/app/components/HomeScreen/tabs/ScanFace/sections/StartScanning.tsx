@@ -1,26 +1,85 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/UI/CustomText';
-
-
-//ICONS
+import React, { useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, Alert, Platform } from 'react-native';
+import { Camera } from 'expo-camera';
+import type { CameraType } from 'expo-camera';
+import { useRouter } from 'expo-router';
+import { CustomText } from '../../../../UI/CustomText';
 import CameraIcon from '@/app/assets/icons/create/camera.svg';
 
+// Cast Camera to a React component type to satisfy TypeScript JSX checks
+const ExpoCamera = (Camera as unknown) as React.ComponentType<any>;
 
-const StartScanning = () => {
+export default function StartScanning() {
+  const router = useRouter();
+  const [permission, setPermission] = useState<any | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
+
+  const requestPermission = async () => {
+    try {
+      const res = await Camera.requestCameraPermissionsAsync();
+      setPermission(res);
+      return res;
+    } catch (e) {
+      console.error('Error requesting camera permission', e);
+      return null;
+    }
+  };
+
+  const handleStartScan = async () => {
+    // Ensure we use the result of requesting permission immediately
+    let res = permission;
+    if (!permission) {
+      res = await requestPermission();
+    }
+
+    if (res?.granted) {
+      setIsScanning(true);
+      // Placeholder: Capture face image and send to backend
+      try {
+        // In a real implementation, capture image from camera and send to /match-face
+        const response = await fetch('http://localhost:5000/api/profiles/match-face', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageUri: 'placeholder-uri' }),
+        });
+        if (response.ok) {
+          const matchedProfile = await response.json();
+          Alert.alert('Success', 'Profile matched!');
+          router.push({ pathname: '/view-card', params: { id: String(matchedProfile._id) } } as any);
+        } else {
+          Alert.alert('Error', 'No matching profile found.');
+        }
+      } catch (error) {
+        Alert.alert('Error', 'Failed to process face scan.');
+        console.error(error);
+      }
+      setIsScanning(false);
+    } else {
+      Alert.alert('Error', 'Camera permission denied.');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.previewContainer}>
-        <CameraIcon width={20} height={20}/>
-        <CustomText style={styles.previewText}>Camera preview will appear here</CustomText>
+        {isScanning && permission?.granted ? (
+          <ExpoCamera style={styles.camera} type={'front' as CameraType} />
+        ) : (
+          <>
+            <CameraIcon width={20} height={20} />
+            <CustomText style={styles.previewText}>Camera preview will appear here</CustomText>
+          </>
+        )}
       </View>
-      <TouchableOpacity style={styles.scanButton}>
-        <CameraIcon width={20} height={20}/>
-        <CustomText style={styles.scanButtonText}>Start Face Scan</CustomText>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity style={styles.scanButton} onPress={handleStartScan}>
+          <CameraIcon width={20} height={20} />
+          <CustomText style={styles.scanButtonText}>Start Face Scan</CustomText>
+        </TouchableOpacity>
+      </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -44,10 +103,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  cameraIcon: {
-    width: 50,
-    height: 50,
-    tintColor: '#666666',
+  camera: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
   },
   previewText: {
     marginTop: 10,
@@ -64,27 +123,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: '100%',
   },
-  buttonIcon: {
-    width: 20,
-    height: 20,
-    tintColor: '#fff',
-    marginRight: 8,
-  },
   scanButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  startIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 8,
-  },
-  previewIcon: {
-    width: 50,
-    height: 50,
-  }
-
 });
-
-export default StartScanning;

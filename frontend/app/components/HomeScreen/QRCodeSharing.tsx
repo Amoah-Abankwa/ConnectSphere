@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '../UI/CustomText';
-import QRCodeSharingIcon from '../../assets/icons/General/qrcode.svg';
+import QRCodeSharingIcon from '@/app/assets/icons/General/qrcode.svg';
 
 
 const QRCodeSharing = () => {

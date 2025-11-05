@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react';
 import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '../UI/CustomText';
-import FaceRecognitionIcon from '../../assets/icons/General/scan.svg';
+import FaceRecognitionIcon from '@/app/assets/icons/General/scan.svg';
 
 const FaceRecognition = () => {
   return (

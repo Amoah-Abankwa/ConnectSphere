@@ -7,7 +7,8 @@ import StartScanning from './sections/StartScanning'
 import UploadQR from './sections/UploadQR'
 import RecognitionTips from './sections/RecognitionTips'
 
-const ScanFace = () => {
+
+  export default function ScanFace() {
   return (
     <View style={styles.container}>
       <Scan />
@@ -18,22 +19,8 @@ const ScanFace = () => {
   )
 }
 
-export default ScanFace
-
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 100,
+    paddingBottom: 10,
   },
-  createProfileText: {
-    textAlign: 'center',
-    fontSize: 18,
-    color: '#ffffffff',
-  },
-  button: { 
-    backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 8,
-    marginHorizontal: 10,
-  }
-
 })

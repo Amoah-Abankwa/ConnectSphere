@@ -1,26 +1,99 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/UI/CustomText';
-
-
-//ICONS
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  Platform,
+} from 'react-native';
+import { Camera, CameraView, CameraType, useCameraPermissions, BarcodeScanningResult } from 'expo-camera';
+import { useRouter } from 'expo-router';
+import {
+  CustomText,
+} from '@/app/components/UI/CustomText';
 import CameraIcon from '@/app/assets/icons/create/camera.svg';
 
+export default function StartScanning() {
+  const router = useRouter();
+  const [permission, requestPermission] = useCameraPermissions();
+  const [isScanning, setIsScanning] = useState(false);
 
-const StartScanning = () => {
+  // Request permission on mount
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.getCameraPermissionsAsync();
+      if (status !== 'granted') {
+        await requestPermission();
+      }
+    })();
+  }, []);
+
+  const handleStartScan = async () => {
+    if (!permission) {
+      await requestPermission();
+    } else if (permission.granted) {
+      setIsScanning(true);
+    } else {
+      Alert.alert('Error', 'Camera permission denied.');
+    }
+  };
+
+  const handleBarCodeScanned = async ({ type, data }: BarcodeScanningResult) => {
+    if (!data) return;
+
+    setIsScanning(false);
+    try {
+      const response = await fetch('http://localhost:5000/api/profiles/match-qr', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ qrCodeId: data }),
+      });
+
+      if (response.ok) {
+        const matchedProfile = await response.json();
+        Alert.alert('Success', 'Profile matched!');
+        router.push({
+          pathname: '/view-card',
+          params: { id: String(matchedProfile._id) },
+        } as any);
+      } else {
+        Alert.alert('Error', 'No profile found for this QR code.');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to process QR code.');
+      console.error(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.previewContainer}>
-        <CameraIcon width={50} height={50}/>
-        <CustomText style={styles.previewText}>Camera preview will appear here</CustomText>
+        {isScanning && permission?.granted ? (
+          <CameraView
+            style={styles.camera}
+            facing="back"
+            barcodeScannerSettings={{
+              barcodeTypes: ['qr'],
+            }}
+            onBarcodeScanned={handleBarCodeScanned}
+          />
+        ) : (
+          <>
+            <CameraIcon width={50} height={50} />
+            <CustomText style={styles.previewText}>
+              Camera preview will appear here
+            </CustomText>
+          </>
+        )}
       </View>
-      <TouchableOpacity style={styles.scanButton}>
-        <CameraIcon width={20} height={20}/>
+
+      <TouchableOpacity style={styles.scanButton} onPress={handleStartScan}>
+        <CameraIcon width={20} height={20} />
         <CustomText style={styles.scanButtonText}>Start Scanning</CustomText>
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -45,10 +118,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  cameraIcon: {
-    width: 50,
-    height: 50,
-    tintColor: '#666666',
+  camera: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
   },
   previewText: {
     marginTop: 10,
@@ -66,27 +139,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: '100%',
   },
-  buttonIcon: {
-    width: 20,
-    height: 20,
-    tintColor: '#fff',
-    marginRight: 8,
-  },
   scanButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  startIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 8,
-  },
-  previewIcon: {
-    width: 50,
-    height: 50,
-  }
-
 });
-
-export default StartScanning;

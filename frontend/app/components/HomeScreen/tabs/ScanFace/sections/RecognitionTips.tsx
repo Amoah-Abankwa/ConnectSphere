@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/UI/CustomText';
+import { View, StyleSheet } from 'react-native';
+import { CustomText } from '../../../../UI/CustomText';
 
-const RecognitionTips = () => {
+export default function RecognitionTips() {
   return (
     <View style={styles.container}>
       <CustomText style={styles.title}>Scanning Tips:</CustomText>
@@ -14,7 +14,7 @@ const RecognitionTips = () => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -43,5 +43,3 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
-
-export default RecognitionTips;

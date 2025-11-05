@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/UI/CustomText';
+import { View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { CustomText } from '../../../../../components/UI/CustomText';
 import Dropdown from '@/app/components/Shared/Dropdown';
 import Input from '@/app/components/Shared/Input';
+import { Profile, SocialMediaEntry } from '../../../../../types/profile';
 
-const SocialMedia = () => {
+interface SocialMediaProps {
+  profileData: Profile;
+  updateProfileData: (updates: Partial<Profile>) => void;
+}
+
+const SocialMedia: React.FC<SocialMediaProps> = ({ profileData, updateProfileData }) => {
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
   const [handleOrUrl, setHandleOrUrl] = useState('');
-  const [socialMediaEntries, setSocialMediaEntries] = useState<
-    { platform: string; handle: string }[]
-  >([]);
 
   const handleAdd = () => {
     if (selectedPlatform && handleOrUrl) {
-      setSocialMediaEntries([...socialMediaEntries, { platform: selectedPlatform, handle: handleOrUrl }]);
+      const newSocialMedia = [
+        ...(profileData.socialMedia || []),
+        { platform: selectedPlatform, handle: handleOrUrl },
+      ];
+      updateProfileData({ socialMedia: newSocialMedia });
       setSelectedPlatform(null);
       setHandleOrUrl('');
     }
   };
 
-  const renderEntry = ({ item }: { item: { platform: string; handle: string } }) => (
+  const renderEntry = ({ item }: { item: SocialMediaEntry }) => (
     <View style={styles.entry}>
       <CustomText>{`${item.platform}: ${item.handle}`}</CustomText>
     </View>
@@ -34,29 +41,33 @@ const SocialMedia = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.inputRow}>
-        <Dropdown
-          options={[
-            { label: 'LinkedIn', value: 'linkedin' },
-            { label: 'Twitter', value: 'twitter' },
-            { label: 'Instagram', value: 'instagram' },
-            { label: 'Facebook', value: 'facebook' },
-            { label: 'GitHub', value: 'github' },
-            { label: 'YouTube', value: 'youtube' },
-            { label: 'TikTok', value: 'tiktok' },
-            { label: 'SnapChat', value: 'snapchat' },
-          ]}
-          value={selectedPlatform}
-          onValueChange={(value) => setSelectedPlatform(value)}
-          placeholder={{ label: 'Select Platform', value: null }}
-        />
-        <Input
-          value={handleOrUrl}
-          onChangeText={setHandleOrUrl}
-          placeholder="Enter handle or URL"
-        />
-      </View>
+  <View style={{ flex: 1 }}>
+    <Dropdown
+      options={[
+        { label: 'LinkedIn', value: 'linkedin' },
+        { label: 'Twitter', value: 'twitter' },
+        { label: 'Instagram', value: 'instagram' },
+        { label: 'Facebook', value: 'facebook' },
+        { label: 'GitHub', value: 'github' },
+        { label: 'YouTube', value: 'youtube' },
+        { label: 'TikTok', value: 'tiktok' },
+        { label: 'SnapChat', value: 'snapchat' },
+      ]}
+      value={selectedPlatform}
+      onValueChange={(value) => setSelectedPlatform(value)}
+      placeholder={{ label: 'Select Platform', value: null }}
+    />
+  </View>
+  <View style={{ flex: 1 }}>
+    <Input
+      value={handleOrUrl}
+      onChangeText={setHandleOrUrl}
+      placeholder="Enter handle or URL"
+    />
+  </View>
+</View>
       <FlatList
-        data={socialMediaEntries}
+        data={profileData.socialMedia}
         renderItem={renderEntry}
         keyExtractor={(item, index) => index.toString()}
         style={styles.list}
