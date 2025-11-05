@@ -31,7 +31,7 @@ export default function CustomLink({
     }
 
     if (to) {
-      router.push(to);
+      router.push(to as Parameters<typeof router.push>[0]);
     } else if (url) {
       Linking.openURL(url);
     }

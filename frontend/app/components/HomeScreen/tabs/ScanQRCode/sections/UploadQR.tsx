@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { useRouter } from 'expo-router';
 import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '@/app/components/UI/CustomText';
 import UploadsIcon from '@/app/assets/icons/create/uploads.svg';
 
-const UploadQR = () => {
+export default function UploadQR() {
+  const router = useRouter();
+
   const handleUpload = () => {
     launchImageLibrary(
       {
@@ -13,14 +16,31 @@ const UploadQR = () => {
         maxHeight: 200,
         maxWidth: 200,
       },
-      (response) => {
+      async (response) => {
         if (response.didCancel) {
           Alert.alert('Cancelled', 'Image selection was cancelled.');
         } else if (response.errorCode) {
           Alert.alert('Error', `Image picker error: ${response.errorMessage}`);
         } else if (response.assets) {
-          Alert.alert('Success', `Image selected: ${response.assets[0].fileName}`);
-          // Handle the selected image here (e.g., process the QR code)
+          try {
+            // Placeholder: In a real implementation, decode QR code from image
+            const qrCodeId = 'placeholder-qr-id'; // Replace with actual QR code decoding
+            const qrResponse = await fetch('http://localhost:5000/api/profiles/match-qr', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ qrCodeId }),
+            });
+            if (qrResponse.ok) {
+              const matchedProfile = await qrResponse.json();
+              Alert.alert('Success', 'Profile matched!');
+              router.push({ pathname: '/view-card', params: { id: String(matchedProfile._id) } } as any);
+            } else {
+              Alert.alert('Error', 'No profile found for this QR code.');
+            }
+          } catch (error) {
+            Alert.alert('Error', 'Failed to process QR code image.');
+            console.error(error);
+          }
         }
       }
     );
@@ -28,9 +48,8 @@ const UploadQR = () => {
 
   return (
     <View style={styles.container}>
-        <CustomText style={styles.title}>Or Upload QR Code Image</CustomText>
+      <CustomText style={styles.title}>Or Upload QR Code Image</CustomText>
       <View style={styles.uploadContainer}>
-        
         <TouchableOpacity style={styles.uploadArea} onPress={handleUpload}>
           <UploadsIcon width={50} height={50} />
           <CustomText style={styles.uploadText}>Click to upload QR code image</CustomText>
@@ -39,7 +58,7 @@ const UploadQR = () => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -54,9 +73,9 @@ const styles = StyleSheet.create({
     elevation: 2,
     alignItems: 'center',
   },
-    title: {
+  title: {
     fontSize: 16,
-    fontWeight: 500,
+    fontWeight: '500',
     color: '#333333',
     textAlign: 'center',
     marginBottom: 10,
@@ -75,11 +94,6 @@ const styles = StyleSheet.create({
   uploadArea: {
     alignItems: 'center',
   },
-  uploadIcon: {
-    width: 50,
-    height: 50,
-    tintColor: '#666666',
-  },
   uploadText: {
     marginTop: 10,
     color: '#666666',
@@ -91,5 +105,3 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
-
-export default UploadQR;

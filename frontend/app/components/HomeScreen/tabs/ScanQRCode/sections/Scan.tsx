@@ -1,13 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Digitals from '@/app/assets/icons/HomeScreen/managing.svg';
 
-const Scan: React.FC = () => {
+export default function Scan() {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <Digitals style={styles.icon} />
-
       </View>
       <Text style={styles.title}>Scan QR Code</Text>
       <Text style={styles.description}>
@@ -15,18 +14,18 @@ const Scan: React.FC = () => {
       </Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent', // Light blue background similar to the image
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
   },
   iconContainer: {
-    backgroundColor: '#007AFF', // Blue circle background
+    backgroundColor: '#007AFF',
     borderRadius: 50,
     padding: 15,
     marginBottom: 20,
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 50,
     height: 50,
-    tintColor: '#FFFFFF', // White icon for contrast
+    tintColor: '#FFFFFF',
   },
   title: {
     fontSize: 24,
@@ -50,5 +49,3 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
 });
-
-export default Scan;

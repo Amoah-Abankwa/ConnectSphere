@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react';
 import { CustomText, CustomTextBold, CustomTextMedium, CustomTextSemiBold } from '../UI/CustomText';
-import EasyShareIcon from '../../assets/icons/General/share.svg';
+import EasyShareIcon from '@/app/assets/icons/General/share.svg';
 
 const EasySharing = () => {
   return (
